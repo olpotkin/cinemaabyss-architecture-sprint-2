@@ -401,7 +401,7 @@ minikube tunnel
 
 ![alt text][image10]
 
-Потом вызовите 
+Потом вызовите
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
