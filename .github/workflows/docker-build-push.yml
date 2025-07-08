@@ -3,12 +3,12 @@ name: Docker Build and Push
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ main, cinema ]
     paths:
       - 'src/**'
       - '.github/workflows/docker-build-push.yml'
   release:
-    types: [published]
+    types: [ published ]
 
 env:
   REGISTRY: ghcr.io
@@ -82,4 +82,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      
+        # NodeJS
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+        node-version: '18'
+
+        # Dependencies
+      - name: Install npm dependencies for tests
+        run: npm install
+        working-directory: tests/postman
+
+        # Postman-tests
+      - name: Run Postman tests
+        run: npm run test:local
+        working-directory: tests/postman
