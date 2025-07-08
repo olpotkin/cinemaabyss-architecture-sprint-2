@@ -9,6 +9,9 @@
 [image5]: ./src/docs/images/05-get-pod.png "Intermediate result"
 [image6]: ./src/docs/images/06-get-pod-3.png "Intermediate result"
 [image7]: ./src/docs/images/07-get-pod-7.png "Intermediate result"
+[image8]: ./src/docs/images/08-movies.png "Intermediate result"
+
+[image9]: ./src/docs/images/09-events-log.png "Logs"
 
 # Задание 1
 
@@ -302,6 +305,10 @@ cat .docker/config.json | base64
   Вы должны увидеть вывод списка фильмов
   Можно поэкспериментировать со значением   MOVIES_MIGRATION_PERCENT в src/kubernetes/configmap.yaml и убедится, что вызовы movies уходят полностью в новый сервис
 
+  Промежуточный результат:
+
+  ![alt text][image8]
+
   12. Запустите тесты из папки tests/postman
   ```bash
    npm run test:kubernetes
@@ -311,6 +318,10 @@ cat .docker/config.json | base64
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+
+Логи:
+
+![alt text][image9]
 
 
 # Задание 4
