@@ -6,6 +6,9 @@
 [image3]: ./src/docs/images/03-topics.png "All topics"
 [image4]: ./src/docs/images/04-consumer.png "Consumer"
 
+[image5]: ./src/docs/images/05-get-pod.png "Intermediate result"
+[image6]: ./src/docs/images/06-get-pod-3.png "Intermediate result"
+
 # Задание 1
 
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
@@ -217,6 +220,10 @@ cat .docker/config.json | base64
   NAME         READY   STATUS    
   postgres-0   1/1     Running   
 
+  Промежуточный результат:
+
+  ![alt text][image5]
+
   4. Разверните Kafka:
   ```bash
   kubectl apply -f src/kubernetes/kafka/kafka.yaml
@@ -226,6 +233,10 @@ cat .docker/config.json | base64
   ```bash
   kubectl -n cinemaabyss logs имя_пода (например - kafka-0)
   ```
+
+  Промежуточный результат:
+
+  ![alt text][image6]
 
   5. Разверните монолит:
   ```bash
