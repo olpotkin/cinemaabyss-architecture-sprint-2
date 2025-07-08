@@ -13,6 +13,9 @@
 
 [image9]: ./src/docs/images/09-events-log.png "Logs"
 
+[image10]: ./src/docs/images/10-helm-deploy.png "Helm deploy"
+[image11]: ./src/docs/images/11-helm-run-deploy.png "Helm run"
+
 # Задание 1
 
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
@@ -394,9 +397,17 @@ kubectl get pods -n cinemaabyss
 minikube tunnel
 ```
 
+Развертывание через Helm:
+
+![alt text][image10]
+
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+Вывод:
+
+![alt text][image11]
 
 ## Удаляем все
 
