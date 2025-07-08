@@ -8,6 +8,7 @@
 
 [image5]: ./src/docs/images/05-get-pod.png "Intermediate result"
 [image6]: ./src/docs/images/06-get-pod-3.png "Intermediate result"
+[image7]: ./src/docs/images/07-get-pod-7.png "Intermediate result"
 
 # Задание 1
 
@@ -276,6 +277,10 @@ cat .docker/config.json | base64
 
   zookeeper-0                       1/1     Running 
 ```
+
+  Промежуточный результат:
+
+  ![alt text][image7]
 
   8. Добавим ingress
 
