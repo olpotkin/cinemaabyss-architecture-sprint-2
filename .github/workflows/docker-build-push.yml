@@ -136,11 +136,9 @@ jobs:
         with:
           node-version: '18'
 
-
       - name: Install npm dependencies for tests
         run: npm install
         working-directory: tests/postman
-
 
       - name: Run Postman tests
         run: npm run test:local
