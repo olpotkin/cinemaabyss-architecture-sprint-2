@@ -57,7 +57,9 @@ services:
       dockerfile: Dockerfile
     container_name: cinemaabyss-monolith
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    restart: on-failure
     ports:
       - "8080:8080"
     environment:
@@ -66,14 +68,16 @@ services:
     networks:
       - cinemaabyss-network
 
-  # Movies Microservice
+    # Movies Microservice
   movies-service:
     build:
       context: ./src/microservices/movies
       dockerfile: Dockerfile
     container_name: cinemaabyss-movies-service
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    restart: on-failure
     ports:
       - "8081:8081"
     environment:
@@ -117,7 +121,7 @@ services:
       MOVIES_SERVICE_URL: http://movies-service:8081
       EVENTS_SERVICE_URL: http://events-service:8082
       GRADUAL_MIGRATION: "true"
-      MOVIES_MIGRATION_PERCENT: "50"
+      MOVIES_MIGRATION_PERCENT: "100"
     networks:
       - cinemaabyss-network
 
