@@ -1,11 +1,30 @@
 ## Изучите [README.md](.\README.md) файл и структуру проекта.
 
+[image1]: ./src/docs/images/01_architecture.png "Architecture"
+
+[image2]: ./src/docs/images/02-tests.png "Tests"
+[image3]: ./src/docs/images/03-topics.png "All topics"
+[image4]: ./src/docs/images/04-consumer.png "Consumer"
+
+[image5]: ./src/docs/images/05-get-pod.png "Intermediate result"
+[image6]: ./src/docs/images/06-get-pod-3.png "Intermediate result"
+[image7]: ./src/docs/images/07-get-pod-7.png "Intermediate result"
+[image8]: ./src/docs/images/08-movies.png "Intermediate result"
+
+[image9]: ./src/docs/images/09-events-log.png "Logs"
+
+[image10]: ./src/docs/images/10-helm-deploy.png "Helm deploy"
+[image11]: ./src/docs/images/11-helm-run-deploy.png "Helm run"
+
 # Задание 1
 
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+
+[ссылка на likec4](./src/docs/architecture/architecture.likec4)
+
+![alt text][image1]
 
 # Задание 2
 
@@ -48,7 +67,7 @@
 
 
 ### 2. Kafka
- Вам как архитектуру нужно также проверить гипотезу насколько просто реализовать применение Kafka в данной архитектуре.
+Вам как архитектуру нужно также проверить гипотезу насколько просто реализовать применение Kafka в данной архитектуре.
 
 Для этого нужно сделать MVP сервис events, который будет при вызове API создавать и сам же читать сообщения в топике Kafka.
 
@@ -58,6 +77,18 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090 
+
+Tests:
+
+![alt text][image2]
+
+All topics:
+
+![alt text][image3]
+
+Consumer:
+
+![alt text][image4]
 
 # Задание 3
 
@@ -196,6 +227,10 @@ cat .docker/config.json | base64
   NAME         READY   STATUS    
   postgres-0   1/1     Running   
 
+  Промежуточный результат:
+
+  ![alt text][image5]
+
   4. Разверните Kafka:
   ```bash
   kubectl apply -f src/kubernetes/kafka/kafka.yaml
@@ -205,6 +240,10 @@ cat .docker/config.json | base64
   ```bash
   kubectl -n cinemaabyss logs имя_пода (например - kafka-0)
   ```
+
+  Промежуточный результат:
+
+  ![alt text][image6]
 
   5. Разверните монолит:
   ```bash
@@ -245,6 +284,10 @@ cat .docker/config.json | base64
   zookeeper-0                       1/1     Running 
 ```
 
+  Промежуточный результат:
+
+  ![alt text][image7]
+
   8. Добавим ingress
 
   - добавьте аддон
@@ -265,6 +308,10 @@ cat .docker/config.json | base64
   Вы должны увидеть вывод списка фильмов
   Можно поэкспериментировать со значением   MOVIES_MIGRATION_PERCENT в src/kubernetes/configmap.yaml и убедится, что вызовы movies уходят полностью в новый сервис
 
+  Промежуточный результат:
+
+  ![alt text][image8]
+
   12. Запустите тесты из папки tests/postman
   ```bash
    npm run test:kubernetes
@@ -274,6 +321,10 @@ cat .docker/config.json | base64
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+
+Логи:
+
+![alt text][image9]
 
 
 # Задание 4
@@ -346,9 +397,17 @@ kubectl get pods -n cinemaabyss
 minikube tunnel
 ```
 
-Потом вызовите 
+Развертывание через Helm:
+
+![alt text][image10]
+
+Потом вызовите
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+Вывод:
+
+![alt text][image11]
 
 ## Удаляем все
 

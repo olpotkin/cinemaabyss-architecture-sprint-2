@@ -1,4 +1,4 @@
-const newman = require('newman');
+ const newman = require('newman');
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs/yargs');

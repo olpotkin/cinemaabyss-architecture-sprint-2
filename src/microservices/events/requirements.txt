@@ -1,0 +1,4 @@
+confluent-kafka
+fastapi
+kafka-python
+uvicorn

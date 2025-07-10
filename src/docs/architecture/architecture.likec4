@@ -1,0 +1,112 @@
+specification {
+  element actor
+  element system
+  element component
+}
+
+model {
+  customer = actor 'Пользователь' {
+    description '
+      -Просмотр фильмов
+      -Менеджмент подписки
+      -Выставление оценок
+    '
+  }
+
+  cinemaAbyss_sys = system 'CinemaAbyss' {
+    component api_gw 'API GW' {
+      description '
+        [Go]
+        Маршрутизация трафика
+      '
+    }
+    component movie_service 'Movies Service' {
+      description '
+        [Go]
+        Обработка метаданных (жанры, фильмы, оценки)
+      '
+    }
+    component event_service 'Events Service' {
+      description '
+        [Go + Kafka]
+        Публикация и обработка событий (регистрация, оценки)
+      '
+    }
+    component monolyth 'Монолит' {
+      description '
+        [Go]
+        Унаследованный функционал: пользователи, подписки, платежи
+      '
+    }
+    component s3 'S3' {
+      description '
+        [Objects Storage]
+        Хранит файлы и видео
+      '
+    }
+    component kafka 'Kafka' {
+      description '
+        [Kafka]
+        Шина событий для микросервисов
+      '
+    }
+    component postgre_sql 'PostgreSQL' {
+      description '
+        [Database]
+        Хранение данных: пользователи, платежи, фильмы
+      '
+    }
+
+    // Relationships inside cinemaAbyss
+    api_gw -> movie_service '[REST] Маршрутизирует запросы к фильмам'
+    api_gw -> event_service '[Kafka] Отправляет события'
+    api_gw -> monolyth '[REST] Маршрутизирует устаревшие запросы'
+    movie_service -> s3 'Хранит обложки, трейлеры'
+    movie_service -> kafka 'Публикует события'
+    event_service -> kafka 'Читает события'
+    movie_service -> postgre_sql 'Читает/пишет данные'
+    event_service -> postgre_sql 'Обновляет данные'
+    monolyth -> postgre_sql 'Читает/пишет данные'
+
+    event_service -> rec_sys '[Kafka / REST] Отправляет данные для рекомендаций'
+    monolyth -> payment_sys '[REST] Обрабатывает платежи'
+  }
+
+  rec_sys = system 'Рекомендательная система' {
+    description 'Система является внешней'
+  }
+  
+  payment_sys = system 'Платежная система' {
+    description 'Система является внешней'
+  }
+
+
+  // Relationships on the Landscape level
+  customer -> api_gw '[HTTP]'
+  customer -> cinemaAbyss_sys '[HTTP] Ноутбуки, smart-TV, мобильные устройства'
+}
+
+views {
+
+  view index {
+    title 'Landscape view'
+
+    include *
+  }
+
+  view of cinemaAbyss_sys {
+    title 'cinemaAbyss context view'
+
+    include *
+
+    style customer {
+      color muted
+    }
+    style rec_sys {
+      color muted
+    }
+    style payment_sys {
+      color muted
+    }
+  }
+}
